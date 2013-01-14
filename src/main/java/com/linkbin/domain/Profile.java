@@ -2,6 +2,8 @@ package com.linkbin.domain;
 
 import javax.persistence.Entity;
 import java.io.Serializable;
+
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -54,7 +56,7 @@ public class Profile implements Serializable
    private @Temporal(TemporalType.DATE)
    Date registeredOn = new Date();
 
-   private @OneToMany(mappedBy = "profile", cascade = CascadeType.ALL, orphanRemoval = true)
+   private @OneToMany(mappedBy = "profile", cascade = CascadeType.ALL, orphanRemoval = true,fetch=FetchType.EAGER)
    Set<Linkbin> linkbins = new HashSet<Linkbin>();
 
    public Long getId()
