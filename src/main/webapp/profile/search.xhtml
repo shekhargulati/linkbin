@@ -1,0 +1,105 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/resources/scaffold/pageTemplate.xhtml">
+
+	<f:metadata>
+		<f:viewParam name="page" value="#{profileBean.page}"/>
+		<f:event type="preRenderView" listener="#{profileBean.paginate}"/>
+	</f:metadata>
+
+	<ui:param name="pageTitle" value="Search Profile entities"/>
+
+	<ui:define name="header">
+		Profile
+	</ui:define>
+
+	<ui:define name="subheader">
+		Search Profile entities
+	</ui:define>
+
+	<ui:define name="footer"/>
+
+	<ui:define name="main">
+		<h:form id="search">
+			<f:validateBean disabled="true">
+				<h:panelGroup styleClass="search">
+
+					<h:panelGrid columnClasses="label,component,required" columns="3">
+						<h:outputLabel for="profileBeanExampleFullName" value="Full Name:"/>
+						<h:panelGroup>
+							<h:inputText id="profileBeanExampleFullName" maxLength="20" value="#{profileBean.example.fullName}"/>
+							<h:message for="profileBeanExampleFullName" styleClass="error"/>
+						</h:panelGroup>
+						<h:outputText/>
+						<h:outputLabel for="profileBeanExampleEmail" value="Email:"/>
+						<h:panelGroup>
+							<h:inputText id="profileBeanExampleEmail" value="#{profileBean.example.email}"/>
+							<h:message for="profileBeanExampleEmail" styleClass="error"/>
+						</h:panelGroup>
+						<h:outputText/>
+						<h:outputLabel for="profileBeanExamplePassword" value="Password:"/>
+						<h:panelGroup>
+							<h:inputText id="profileBeanExamplePassword" maxLength="10" value="#{profileBean.example.password}"/>
+							<h:message for="profileBeanExamplePassword" styleClass="error"/>
+						</h:panelGroup>
+						<h:outputText/>
+					</h:panelGrid>
+					<h:panelGroup styleClass="buttons">
+						<h:commandLink value="Search" action="#{profileBean.search}" styleClass="btn btn-primary"/>
+						<h:commandLink value="Create New" action="#{profileBean.create}" styleClass="btn btn-primary"/>
+					</h:panelGroup>
+				</h:panelGroup>
+			</f:validateBean>
+			
+			<h:dataTable id="profileBeanPageItems" styleClass="data-table" value="#{profileBean.pageItems}" var="_item">
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="Full Name"/>
+					</f:facet>
+					<h:link outcome="/profile/view">
+						<f:param name="id" value="#{_item.id}"/>
+						<h:outputText id="itemFullName" value="#{_item.fullName}"/>
+					</h:link>
+				</h:column>
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="Email"/>
+					</f:facet>
+					<h:link outcome="/profile/view">
+						<f:param name="id" value="#{_item.id}"/>
+						<h:outputText id="itemEmail" value="#{_item.email}"/>
+					</h:link>
+				</h:column>
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="Password"/>
+					</f:facet>
+					<h:link outcome="/profile/view">
+						<f:param name="id" value="#{_item.id}"/>
+						<h:outputText id="itemPassword" value="#{_item.password}"/>
+					</h:link>
+				</h:column>
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="Registered On"/>
+					</f:facet>
+					<h:link outcome="/profile/view">
+						<f:param name="id" value="#{_item.id}"/>
+						<h:outputText id="itemRegisteredOn" value="#{_item.registeredOn}">
+							<f:convertDateTime type="date"/>
+						</h:outputText>
+					</h:link>
+				</h:column>
+			</h:dataTable>
+			<ui:include src="/resources/scaffold/paginator.xhtml">
+				<ui:param name="paginatorBean" value="#{profileBean}"/>
+			</ui:include>
+		</h:form>
+			
+	</ui:define>
+
+</ui:composition>

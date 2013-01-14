@@ -1,0 +1,133 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/resources/scaffold/pageTemplate.xhtml">
+
+	<f:metadata>
+		<f:viewParam name="page" value="#{linkbinBean.page}"/>
+		<f:event type="preRenderView" listener="#{linkbinBean.paginate}"/>
+	</f:metadata>
+
+	<ui:param name="pageTitle" value="Search Linkbin entities"/>
+
+	<ui:define name="header">
+		Linkbin
+	</ui:define>
+
+	<ui:define name="subheader">
+		Search Linkbin entities
+	</ui:define>
+
+	<ui:define name="footer"/>
+
+	<ui:define name="main">
+		<h:form id="search">
+			<f:validateBean disabled="true">
+				<h:panelGroup styleClass="search">
+
+					<h:panelGrid columnClasses="label,component,required" columns="3">
+						<h:outputLabel for="linkbinBeanExampleTitle" value="Title:"/>
+						<h:panelGroup>
+							<h:inputText id="linkbinBeanExampleTitle" value="#{linkbinBean.example.title}"/>
+							<h:message for="linkbinBeanExampleTitle" styleClass="error"/>
+						</h:panelGroup>
+						<h:outputText/>
+						<h:outputLabel for="linkbinBeanExampleText" value="Text:"/>
+						<h:panelGroup>
+							<h:inputText id="linkbinBeanExampleText" maxLength="4000" value="#{linkbinBean.example.text}"/>
+							<h:message for="linkbinBeanExampleText" styleClass="error"/>
+						</h:panelGroup>
+						<h:outputText/>
+						<h:outputLabel for="linkbinBeanExampleUrl" value="Url:"/>
+						<h:panelGroup>
+							<h:inputText id="linkbinBeanExampleUrl" value="#{linkbinBean.example.url}"/>
+							<h:message for="linkbinBeanExampleUrl" styleClass="error"/>
+						</h:panelGroup>
+						<h:outputText/>
+						<h:outputLabel for="linkbinBeanExampleExpiration" value="Expiration:"/>
+						<h:panelGroup>
+							<h:selectOneMenu id="linkbinBeanExampleExpiration" value="#{linkbinBean.example.expiration}">
+								<f:selectItem/>
+								<f:selectItem itemValue="NEVER"/>
+								<f:selectItem itemValue="TEN_MINUTES"/>
+								<f:selectItem itemValue="ONE_MINUTE"/>
+								<f:selectItem itemValue="ONE_HOUR"/>
+							</h:selectOneMenu>
+							<h:message for="linkbinBeanExampleExpiration" styleClass="error"/>
+						</h:panelGroup>
+						<h:outputText/>
+						<h:outputLabel for="linkbinBeanExampleProfile" value="Profile:"/>
+						<h:panelGroup>
+							<h:selectOneMenu converter="#{profileBean.converter}" id="linkbinBeanExampleProfile" value="#{linkbinBean.example.profile}">
+								<f:selectItem/>
+								<f:selectItems value="#{profileBean.all}"/>
+							</h:selectOneMenu>
+							<h:message for="linkbinBeanExampleProfile" styleClass="error"/>
+						</h:panelGroup>
+						<h:outputText/>
+					</h:panelGrid>
+					<h:panelGroup styleClass="buttons">
+						<h:commandLink value="Search" action="#{linkbinBean.search}" styleClass="btn btn-primary"/>
+						<h:commandLink value="Create New" action="#{linkbinBean.create}" styleClass="btn btn-primary"/>
+					</h:panelGroup>
+				</h:panelGroup>
+			</f:validateBean>
+			
+			<h:dataTable id="linkbinBeanPageItems" styleClass="data-table" value="#{linkbinBean.pageItems}" var="_item">
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="Title"/>
+					</f:facet>
+					<h:link outcome="/linkbin/view">
+						<f:param name="id" value="#{_item.id}"/>
+						<h:outputText id="itemTitle" value="#{_item.title}"/>
+					</h:link>
+				</h:column>
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="Text"/>
+					</f:facet>
+					<h:link outcome="/linkbin/view">
+						<f:param name="id" value="#{_item.id}"/>
+						<h:outputText id="itemText" value="#{_item.text}"/>
+					</h:link>
+				</h:column>
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="Accessible"/>
+					</f:facet>
+					<h:link outcome="/linkbin/view">
+						<f:param name="id" value="#{_item.id}"/>
+						<h:outputText styleClass="#{_item.accessible ? 'boolean-true' : 'boolean-false'}" value=""/>
+					</h:link>
+				</h:column>
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="Expiration"/>
+					</f:facet>
+					<h:link outcome="/linkbin/view">
+						<f:param name="id" value="#{_item.id}"/>
+						<h:outputText id="itemExpiration" value="#{_item.expiration}"/>
+					</h:link>
+				</h:column>
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="Profile"/>
+					</f:facet>
+					<h:link outcome="/linkbin/view">
+						<f:param name="id" value="#{_item.id}"/>
+						<h:outputText id="itemProfile" value="#{_item.profile}"/>
+					</h:link>
+				</h:column>
+			</h:dataTable>
+			<ui:include src="/resources/scaffold/paginator.xhtml">
+				<ui:param name="paginatorBean" value="#{linkbinBean}"/>
+			</ui:include>
+		</h:form>
+			
+	</ui:define>
+
+</ui:composition>

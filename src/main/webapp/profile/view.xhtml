@@ -1,0 +1,92 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:forgeview="http://jboss.org/forge/view"
+	template="/resources/scaffold/pageTemplate.xhtml">
+
+	<f:metadata>
+		<f:viewParam name="id" value="#{profileBean.id}"/>
+		<f:event type="preRenderView" listener="#{profileBean.retrieve}"/>
+	</f:metadata>
+
+	<ui:param name="pageTitle" value="View Profile"/>
+
+	<ui:define name="header">
+		Profile
+	</ui:define>
+
+	<ui:define name="subheader">
+		View existing Profile
+	</ui:define>
+
+	<ui:define name="footer"/>
+
+	<ui:define name="main">
+		<h:panelGrid columnClasses="label,component,required" columns="3">
+			<h:outputLabel for="profileBeanProfileFullName" value="Full Name:"/>
+			<h:outputText id="profileBeanProfileFullName" value="#{profileBean.profile.fullName}"/>
+			<h:outputText/>
+			<h:outputLabel for="profileBeanProfileEmail" value="Email:"/>
+			<h:outputText id="profileBeanProfileEmail" value="#{profileBean.profile.email}"/>
+			<h:outputText/>
+			<h:outputLabel for="profileBeanProfilePassword" value="Password:"/>
+			<h:outputText id="profileBeanProfilePassword" value="#{profileBean.profile.password}"/>
+			<h:outputText/>
+			<h:outputLabel for="profileBeanProfileRegisteredOn" value="Registered On:"/>
+			<h:outputText id="profileBeanProfileRegisteredOn" value="#{profileBean.profile.registeredOn}">
+				<f:convertDateTime type="date"/>
+			</h:outputText>
+			<h:outputText/>
+			<h:outputLabel for="profileBeanProfileLinkbins" value="Linkbins:"/>
+			<h:dataTable id="profileBeanProfileLinkbins" styleClass="data-table" value="#{forgeview:asList(profileBean.profile.linkbins)}" var="_item">
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="Title"/>
+					</f:facet>
+					<h:link outcome="/linkbin/view">
+						<f:param name="id" value="#{_item.id}"/>
+						<h:outputText id="itemTitle" value="#{_item.title}"/>
+					</h:link>
+				</h:column>
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="Text"/>
+					</f:facet>
+					<h:link outcome="/linkbin/view">
+						<f:param name="id" value="#{_item.id}"/>
+						<h:outputText id="itemText" value="#{_item.text}"/>
+					</h:link>
+				</h:column>
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="Accessible"/>
+					</f:facet>
+					<h:link outcome="/linkbin/view">
+						<f:param name="id" value="#{_item.id}"/>
+						<h:outputText styleClass="#{_item.accessible ? 'boolean-true' : 'boolean-false'}" value=""/>
+					</h:link>
+				</h:column>
+				<h:column>
+					<f:facet name="header">
+						<h:outputText value="Expiration"/>
+					</f:facet>
+					<h:link outcome="/linkbin/view">
+						<f:param name="id" value="#{_item.id}"/>
+						<h:outputText id="itemExpiration" value="#{_item.expiration}"/>
+					</h:link>
+				</h:column>
+			</h:dataTable>
+			<h:outputText/>
+		</h:panelGrid>
+
+		<div class="buttons">
+			<h:link value="View All" outcome="search" styleClass="btn btn-primary"/> 
+			<h:link value="Edit" outcome="create" includeViewParams="true" styleClass="btn btn-primary"/>
+			<h:link value="Create New" outcome="create" styleClass="btn btn-primary"/>
+		</div>
+	</ui:define>
+
+</ui:composition>
