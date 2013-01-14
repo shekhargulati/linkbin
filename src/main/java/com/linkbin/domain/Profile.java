@@ -20,7 +20,9 @@ import java.util.HashSet;
 import com.linkbin.domain.Linkbin;
 import javax.persistence.OneToMany;
 import javax.persistence.CascadeType;
+import javax.xml.bind.annotation.XmlRootElement;
 
+@XmlRootElement
 @Entity
 public class Profile implements Serializable
 {

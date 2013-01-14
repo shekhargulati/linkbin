@@ -22,4 +22,5 @@
 <NAME>linkbin</NAME>
 </openshift>
 </forge>
+<rootpath>/rest</rootpath>
 </configuration>

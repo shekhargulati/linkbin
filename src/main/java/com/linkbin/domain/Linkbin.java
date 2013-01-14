@@ -16,7 +16,9 @@ import com.linkbin.domain.Profile;
 import javax.persistence.ManyToOne;
 
 import org.hibernate.validator.constraints.URL;
+import javax.xml.bind.annotation.XmlRootElement;
 
+@XmlRootElement
 @Entity
 public class Linkbin implements Serializable
 {
